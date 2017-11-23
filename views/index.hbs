@@ -1,0 +1,118 @@
+<body id="main">
+    <h1 class="w3-center">CRUD With NodeJS and MongoDB</h1>
+    <div class="w3-row">
+        <!--CREATE-->
+        <div class="w3-third w3-border">
+            <div class="w3-container w3-red">
+                <h3><b>Create Document</b></h3>
+            </div>
+            <form class="w3-container">
+                <p><input type="text" class="w3-input w3-border" placeholder="Ingresar Nro Documento" name="txtNDoc" id="txtNDoc" required="required"> </p>
+                <p><input type="text" class="w3-input w3-border" placeholder="Ingresar Nombre" name="txtNom" id="txtNom" required="required"></p>
+                <p><input type="text" class="w3-input w3-border" placeholder="Ingresar Apellido" name="txtApe" id="txtApe" required="required"></p>
+                <p><input type="number" class="w3-input w3-border" placeholder="Ingresar Edad" name="txtEdad" id="txtEdad" required="required"></p>
+                <p><input type="text" class="w3-input w3-border" placeholder="Ingresar Direccion" name="txtDir" id="txtDir"></p>
+                <p><input type="text" class="w3-input w3-border" placeholder="Ingresar Telefono" name="txtTel" id="txtTel"></p>
+                <p><input type="text" class="w3-input w3-border" placeholder="Ingresar Celular" name="txtCel" id="txtCel"></p>
+                <p><input type="text" class="w3-input w3-border" placeholder="Ingresar Hobbie" name="txtHob" id="txtHob"></p>
+                <p><button type="button" class="w3-button w3-block w3-red" onclick="CreateDoc()">Guardar Datos</button></p>
+            </form>
+        </div>
+        <!--UPDATE-->
+        <div class="w3-third w3-border">
+            <div class="w3-container w3-green">
+                <h3><b>Update Document</b></h3>
+            </div>
+            <form class="w3-container">
+                <p>
+                    <input list="nroDocs" class="w3-input w3-border" onkeypress="loadDocToUpd()" name="findNDocToUpd" id="findNDocToUpd" placeholder="Buscar con Nro de Documento">
+                    <datalist id="nroDocs">
+                        {{#each items}}
+                            <option value="{{documento}}"></option>
+                        {{/each}}
+                    </datalist>
+                </p>
+                <p><input type="text" class="w3-input w3-border" placeholder="Nombre" id="txtNomToUpd"></p>
+                <p><input type="text" class="w3-input w3-border" placeholder="Apellido" id="txtApeToUpd"></p>
+                <p><input type="number" class="w3-input w3-border" placeholder="Edad" id="txtEdadToUpd"></p>
+                <p><input type="text" class="w3-input w3-border" placeholder="Direccion" id="txtDirToUpd"></p>
+                <p><input type="text" class="w3-input w3-border" placeholder="Telefono" id="txtTelToUpd"></p>
+                <p><input type="text" class="w3-input w3-border" placeholder="Celular" id="txtCelToUpd"></p>
+                <p><input type="text" class="w3-input w3-border" placeholder="Hobbie" id="txtHobToUpd"></p>
+                <p><button type="button" class="w3-button w3-block w3-green" onclick="UpdateDoc()">Actualizar Datos</button></p>
+            </form>
+        </div>
+        <!--DELETE-->
+        <div class="w3-third w3-border">
+            <div class="w3-container w3-blue">
+                <h3><b>Delete Document</b></h3>
+            </div>
+            <form class="w3-container">
+                <p>
+                    <input list="nroDocs" class="w3-input w3-border" onkeypress="loadDocToDel()" name="findNDocToDel" id="findNDocToDel" placeholder="Buscar con Nro de Documento">
+                    <datalist id="nroDocs">
+                        {{#each items}}
+                            <option value="{{documento}}"></option>
+                        {{/each}}
+                    </datalist>
+                </p>
+                <p><input type="text" class="w3-input w3-border" placeholder="Nombre" id="txtNomToDel" readonly="readonly"></p>
+                <p><input type="text" class="w3-input w3-border" placeholder="Apellido" id="txtApeToDel" readonly="readonly"></p>
+                <p><input type="number" class="w3-input w3-border" placeholder="Edad" id="txtEdadToDel" readonly="readonly"></p>
+                <p><input type="text" class="w3-input w3-border" placeholder="Direccion" id="txtDirToDel" readonly="readonly"></p>
+                <p><input type="text" class="w3-input w3-border" placeholder="Telefono" id="txtTelToDel" readonly="readonly"></p>
+                <p><input type="text" class="w3-input w3-border" placeholder="Celular" id="txtCelToDel" readonly="readonly"></p>
+                <p><input type="text" class="w3-input w3-border" placeholder="Hobbie" id="txtHobToDel" readonly="readonly"></p>
+                <p><button type="button" class="w3-button w3-block w3-blue" onclick="DeleteDoc()">Eliminar Datos</button></p>
+            </form>
+        </div>
+    </div>
+    
+    <br>
+
+    <!--READ-->
+    <p><input oninput="w3.filterHTML('#Table', '.item', this.value)" class="w3-block w3-input w3-border" placeholder="Buscar"></p>
+    <div class="w3-responsive">    
+        <table class="w3-table-all w3-hoverable" id="Table">
+            <thead id="Thead">
+                <tr class="w3-blue-gray">
+                    <th>Nro Documento</th>
+                    <th>Nombres</th>
+                    <th>Apellidos</th>
+                    <th>Edad</th>
+                    <th>Direccion</th>
+                    <th>Telefono</th>
+                    <th>Celular</th>
+                    <th>Hobbies</th>
+                </tr>
+            </thead>
+            <div id="Tdata">
+                {{#each items}}
+                <tr class="item">
+                    <td>{{documento}}</td>
+                    <td>{{nombre}}</td>
+                    <td>{{apellido}}</td>
+                    <td>{{edad}}</td>
+                    <td>{{direccion}}</td>
+                    <td>{{telefono}}</td>
+                    <td>{{celular}}</td>
+                    <td>{{hoobie}}</td>
+                </tr>
+                {{/each}}
+            </div>
+        </table>
+    </div>
+
+    <!--PIE-->
+    <p>
+    <footer class="w3-container w3-dark-gray w3-padding-16">
+        <h3 class="w3-center">Powered By: Jaison Mora Mora</h3>
+        <p class="w3-center">Follow me: </p>
+        <div class="w3-bar w3-center">
+            <a href="https://github.com/JasonMoraMora" target="_blank">
+                <i class="fa fa-github w3-jumbo" aria-hidden="true"></i>    
+            </a>
+        </div>
+    </footer>
+    </p>
+</body>
